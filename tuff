@@ -1,0 +1,262 @@
+#!/bin/sh
+
+#       AUTHOR : Brett Robinson
+#  DESCRIPTION : A shell script to shorten Pebble SDK commands.
+#      LICENSE : This project uses the MIT License.
+
+function text_welcome {
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+  echo "  _____ _   _ ___ ___   ___ ___ ___ ___ _    ___                  ";
+  echo " |_   _| | | | __| __| | _ \ __| _ ) _ ) |  | __|                 ";
+  echo "   | | | |_| | _|| _|  |  _/ _|| _ \ _ \ |__| _|                  ";
+  echo "   |_|  \___/|_| |_|   |_| |___|___/___/____|___|                 ";
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+}
+
+function text_clean {
+  echo "  ___ ___ ___ ___ _  _    ___ _    ___   _   _  _                 ";
+  echo " | _ ) __/ __|_ _| \| |  / __| |  | __| /_\ | \| |                ";
+  echo " | _ \ _| (_ || || .  | | (__| |__| _| / _ \| .  |_ _ _           ";
+  echo " |___/___\___|___|_|\_|  \___|____|___/_/ \_\_|\_(_|_|_)          ";
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+  echo "                                                                  ";
+}
+
+function text_tidy {
+  echo "    _   _    ___ ___   _   _____   __  _____ ___ _____   ___      ";
+  echo "   /_\ | |  | _ \ __| /_\ |   \ \ / / |_   _|_ _|   \ \ / / |     ";
+  echo "  / _ \| |__|   / _| / _ \| |) \ V /    | |  | || |) \ V /|_|     ";
+  echo " /_/ \_\____|_|_\___/_/ \_\___/ |_|     |_| |___|___/ |_| (_)     ";
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+  echo "                                                                  ";
+}
+
+function text_build {
+  echo "  ___ ___ ___ ___ _  _   ___ _   _ ___ _    ___                   ";
+  echo " | _ ) __/ __|_ _| \| | | _ ) | | |_ _| |  |   \                  ";
+  echo " | _ \ _| (_ || || .  | | _ \ |_| || || |__| |) | _ _             ";
+  echo " |___/___\___|___|_|\_| |___/\___/|___|____|___(_|_|_)            ";
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+  echo "                                                                  ";
+}
+
+function text_install {
+  echo "  ___ ___ ___ ___ _  _   ___ _  _ ___ _____ _   _    _            ";
+  echo " | _ ) __/ __|_ _| \| | |_ _| \| / __|_   _/_\ | |  | |           ";
+  echo " | _ \ _| (_ || || .  |  | || .  \__ \ | |/ _ \| |__| |__ _ _ _   ";
+  echo " |___/___\___|___|_|\_| |___|_|\_|___/ |_/_/ \_\____|____(_|_|_)  ";
+  echo "                                                                  ";
+  echo " >> Install: '$1'                                                 ";
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+  echo "                                                                  ";
+}
+
+function text_screenshot {
+  echo "  ___  ___ ___ ___ ___ _  _ ___ _  _  ___ _____                   ";
+  echo " / __|/ __| _ \ __| __| \| / __| || |/ _ \_   _|                  ";
+  echo " \__ \ (__|   / _|| _|| .  \__ \ __ | (_) || |                    ";
+  echo " |___/\___|_|_\___|___|_|\_|___/_||_|\___/ |_|                    ";
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+  echo "                                                                  ";
+}
+
+function text_help {
+  echo "  _  _ ___ _    ___                                               ";
+  echo " | || | __| |  | _ \                                              ";
+  echo " | __ | _|| |__|  _/                                              ";
+  echo " |_||_|___|____|_|                                                ";
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+  echo "                                                                  ";
+  echo " Command:";
+  echo " tuff             => Builds the pebble project";
+  echo " tuff [-options]  => Builds the pebble project + options";
+  echo " tuff [-modifier] => Executes only the modifier";
+  echo "                                                                  ";
+  echo " Single Options:";
+  echo " [-t] => Cleans the project before the build stage";
+  echo " [-i] => Installs the project, default is phone";
+  echo " [-a] => Installs the project to the aplite emulator";
+  echo " [-b] => Installs the project to the basalt emulator";
+  echo " [-c] => Installs the project to the chalk emulator";
+  echo "                                                                  ";
+  echo " Combining Options:";
+  echo " [-ti] => Cleans and installs the project to the default";
+  echo " [-ta] => Cleans and installs the project to the aplite emulator";
+  echo " [-tb] => Cleans and installs the project to the basalt emulator";
+  echo " [-tc] => Cleans and installs the project to the chalk emulator";
+  echo "                                                                  ";
+  echo " Modifier Options:";
+  echo " note: modifier options can only be run alone";
+  echo " [-s]  => Takes a screenshot";
+  echo " [-h]  => Displays the help page";
+  echo " [-v]  => Displays the version";
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+  echo "                                                                  ";
+}
+
+function text_version {
+  echo " __   _____ ___  ___ ___ ___  _  _                                ";
+  echo " \ \ / / __| _ \/ __|_ _/ _ \| \| |                               ";
+  echo "  \ V /| _||   /\__ \| | (_) | .  |                               ";
+  echo "   \_/ |___|_|_\|___/___\___/|_|\_|                               ";
+  echo "                                                                  ";
+  echo " >> $1                                                            ";
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+  echo "                                                                  ";
+}
+
+function text_success {
+  echo "  ___ _   _  ___ ___ ___ ___ ___ _                                ";
+  echo " / __| | | |/ __/ __| __/ __/ __| |                               ";
+  echo " \__ \ |_| | (_| (__| _|\__ \__ \_|                               ";
+  echo " |___/\___/ \___\___|___|___/___(_)                               ";
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+  echo "                                                                  ";
+}
+
+function text_abort {
+  echo "    _   ___  ___  ___ _____ ___ _  _  ___                         ";
+  echo "   /_\ | _ )/ _ \| _ \_   _|_ _| \| |/ __|                        ";
+  echo "  / _ \| _ \ (_) |   / | |  | || .  | (_ |                        ";
+  echo " /_/ \_\___/\___/|_|_\ |_| |___|_|\_|\___|                        ";
+  echo "  ___ ___  ___   ___ ___ ___ ___                                  ";
+  echo " | _ \ _ \/ _ \ / __| __/ __/ __|                                 ";
+  echo " |  _/   / (_) | (__| _|\__ \__ \                                 ";
+  echo " |_| |_|_\ ___/ \___|___|___/___/                                 ";
+  echo "                                                                  ";
+  echo " >> ERROR: '$1' PROCESS                                           ";
+  echo "  ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ___ ";
+  echo " |___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|";
+  echo "                                                                  ";
+}
+
+function begin {
+  text_welcome
+}
+
+function clean_build_install {
+
+  PEBBLE_DIR="$(pwd)"
+  if [ -f $PEBBLE_DIR/appinfo.json ]
+  then
+    if [ "$1" = "-t" ] || [ "$1" = "-ti" ] || [ "$2" = "-t" ]
+    then
+      text_clean
+      CURRENT_DIR="$(pwd)"
+      if [ -d $CURRENT_DIR/build ]
+      then
+        pebble clean
+      else
+        text_tidy
+      fi
+    fi
+
+    text_build
+    if pebble build ; then
+
+      # Install to the phone
+      if [ "$1" = "-i" ] || [ "$1" = "-ti" ] || [ "$2" = "-i" ]
+      then
+        text_install PHONE
+        if pebble install ; then
+          text_success
+        else
+          text_abort INSTALL_PHONE
+        fi
+
+        # Install to the aplite emulator
+      elif [ "$1" = "-a" ] || [ "$1" = "-ta" ] || [ "$2" = "-a" ]
+        then
+          text_install APLITE_EMULATOR
+          if pebble install --emulator aplite ; then
+            text_success
+          else
+            text_abort INSTALL_APLITE_EMULATOR
+          fi
+
+          # Install to the basalt emulator
+        elif [ "$1" = "-b" ] || [ "$1" = "-tb" ] || [ "$2" = "-b" ]
+          then
+            text_install BASALT_EMULATOR
+            if pebble install --emulator basalt ; then
+              text_success
+            else
+              text_abort INSTALL_BASALT_EMULATOR
+            fi
+
+            # Install to the chalk emulator
+          elif [ "$1" = "-c" ] || [ "$1" = "-tc" ] || [ "$2" = "-c" ]
+            then
+              text_install CHALK_EMULATOR
+              if pebble install --emulator chalk ; then
+                text_success
+              else
+                text_abort INSTALL_CHALK_EMULATOR
+              fi
+
+      else
+        text_success
+      fi
+    else
+      text_abort BUILD
+    fi
+  else
+    text_abort NOT_A_PEBBLE_PROJECT
+  fi
+}
+
+function screenshot {
+  text_screenshot
+  if pebble screenshot ; then
+    text_success
+  else
+    text_abort SCREENSHOT
+  fi
+}
+
+function show_help {
+  text_help
+}
+
+function show_version {
+  text_version 1.0.0
+}
+
+function main {
+
+  OPT_1="$1"
+  OPT_2="$2"
+
+  if [ "$OPT_1" = "-s" ]
+  then
+    screenshot
+  elif [ "$OPT_1" = "-h" ]
+  then
+    show_help
+  elif [ "$OPT_1" = "-v" ]
+  then
+    show_version
+  elif [ "$OPT_1" != "-s" ] && [ "$OPT_1" != "-h" ]  && [ "$OPT_1" != "-v" ]
+  then
+    clean_build_install $OPT_1 $OPT_2
+  else
+    abort INVALID_COMMAND
+  fi
+}
+
+# Main
+begin
+OPT_1="$1"
+OPT_2="$2"
+main $OPT_1 $OPT_2
